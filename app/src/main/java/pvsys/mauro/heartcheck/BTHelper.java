@@ -14,7 +14,6 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -24,13 +23,12 @@ import android.os.Message;
 import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
-import android.widget.Toast;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import static android.bluetooth.le.ScanSettings.MATCH_MODE_STICKY;
 import static android.bluetooth.le.ScanSettings.SCAN_MODE_LOW_LATENCY;
@@ -49,7 +47,7 @@ public class BTHelper {
         SCANNING_OFF
     }
 
-    private static final Logger LOG = LoggerFactory.getLogger(BTHelper.class);
+    private static final Logger LOG = new Logger(BTHelper.class.getSimpleName()).withDebug(true);
     private final Handler handler = new Handler();
     private final Activity activityContext;
 
@@ -63,6 +61,7 @@ public class BTHelper {
     }
 
     public void startBT(){
+        LOG.info("starting bluetooth - ");
         IntentFilter bluetoothIntents = new IntentFilter();
         bluetoothIntents.addAction(BluetoothDevice.ACTION_FOUND);
         bluetoothIntents.addAction(BluetoothDevice.ACTION_UUID);
@@ -72,6 +71,9 @@ public class BTHelper {
         bluetoothIntents.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
 
         this.activityContext.registerReceiver(bluetoothReceiver, bluetoothIntents);
+
+        LOG.info("starting discovery");
+        startDiscovery();
     }
 
 
@@ -402,18 +404,22 @@ public class BTHelper {
 
     private void handleDeviceFound(BluetoothDevice device, short rssi, ParcelUuid[] uuids) {
         LOG.debug("found device: " + device.getName() + ", " + device.getAddress());
-        if (LOG.isDebugEnabled()) {
-            if (uuids != null && uuids.length > 0) {
-                for (ParcelUuid uuid : uuids) {
-                    LOG.debug("  supports uuid: " + uuid.toString());
-                }
-            }
-        }
+
+
+        DeviceCandidate candidate = new DeviceCandidate(device, rssi, uuids);
+        LOG.debug("candidate: " + candidate.getName() + ", " + candidate.getDeviceType() + ", " + candidate.getMacAddress());
+
         if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+            LOG.info("device already bonded: " + device.getName() + ", " + device.getAddress());
             return; // ignore already bonded devices
         }
 
-//        GBDeviceCandidate candidate = new GBDeviceCandidate(device, rssi, uuids);
+        if(!DeviceCandidate.DEVICE_TYPE_UNKNOWN.equals(candidate.getDeviceType())) {
+            LOG.info("device good to be used: " + device.getName() + ", " + device.getAddress());
+        }
+
+
+
 //        DeviceType deviceType = DeviceHelper.getInstance().getSupportedType(candidate);
 //        if (deviceType.isSupported()) {
 //            candidate.setDeviceType(deviceType);

@@ -7,8 +7,6 @@ import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -23,8 +21,7 @@ import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -40,20 +37,41 @@ import java.util.UUID;
  * support this candidate, will the candidate be promoted to a GBDevice.
  */
 public class DeviceCandidate implements Parcelable {
-    private static final Logger LOG = LoggerFactory.getLogger(DeviceCandidate.class);
+    private static final Logger LOG = new Logger("DeviceCandidate");
 
     private final BluetoothDevice device;
     private final short rssi;
     private final ParcelUuid[] serviceUuds;
-    private String deviceType = "unknown";
+    private String deviceType = DEVICE_TYPE_UNKNOWN;
+
+    public static final String DEVICE_TYPE_UNKNOWN = "unknown";
+    public static final String DEVICE_TYPE_MIBAND = "MIBAND";
+    public static final String DEVICE_TYPE_MIBAND2 = "MIBAND2";
+
 
     public DeviceCandidate(BluetoothDevice device, short rssi, ParcelUuid[] serviceUuds) {
         this.device = device;
         this.rssi = rssi;
         this.serviceUuds = mergeServiceUuids(serviceUuds, device.getUuids());
+        if(this.serviceUuds != null) {
+            for (ParcelUuid uuid : this.serviceUuds) {
+                LOG.info("  supports uuid: " + uuid.getUuid().toString());
+            }
+            this.deviceType = DEVICE_TYPE_UNKNOWN;
+            for (ParcelUuid uid : this.serviceUuds) {
+                if (MiBandService.UUID_SERVICE_MIBAND2_SERVICE.equals(uid.getUuid())) {
+                    this.deviceType = DEVICE_TYPE_MIBAND2;
+                } else if (MiBandService.UUID_SERVICE_MIBAND_SERVICE.equals(uid.getUuid())) {
+                    this.deviceType = DEVICE_TYPE_MIBAND;
+                }
+            }
+        } else {
+            LOG.info("NO UID supported");
+        }
     }
 
     private DeviceCandidate(Parcel in) {
+        LOG.info("READING from parcel");
         device = in.readParcelable(getClass().getClassLoader());
         if (device == null) {
             throw new IllegalStateException("Unable to read state from Parcel");
