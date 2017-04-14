@@ -24,7 +24,7 @@ import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 
-
+import static pvsys.mauro.heartcheck.Callbacks.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.List;
 import static android.bluetooth.le.ScanSettings.MATCH_MODE_STICKY;
 import static android.bluetooth.le.ScanSettings.SCAN_MODE_LOW_LATENCY;
 
-public class BTHelper {
+public class MiBandDiscover {
 
     public static final short RSSI_UNKNOWN = 0;
     private static final long SCAN_DURATION = 60000; // 60s
@@ -47,17 +47,28 @@ public class BTHelper {
         SCANNING_OFF
     }
 
-    private static final Logger LOG = new Logger(BTHelper.class.getSimpleName()).withDebug(true);
+    private static final Logger LOG = new Logger(MiBandDiscover.class.getSimpleName()).withDebug(true);
     private final Handler handler = new Handler();
     private final Activity activityContext;
+    private final boolean forceBond;
 
     private Scanning scanningState = Scanning.SCANNING_OFF;
     private BluetoothAdapter adapter;
     private DeviceCandidate bondingDevice;
     private ScanCallback newLeScanCallback = null;
 
-    public BTHelper(Activity activity){
+    private final Callback<DeviceCandidate> onDeviceFound;
+
+    public MiBandDiscover(Activity activity, Callback<DeviceCandidate> onDeviceFound){
         this.activityContext = activity;
+        this.forceBond = false;
+        this.onDeviceFound = onDeviceFound;
+    }
+
+    public MiBandDiscover(Activity activity, Callback<DeviceCandidate> onDeviceFound, boolean forceBound){
+        this.activityContext = activity;
+        this.forceBond = forceBound;
+        this.onDeviceFound = onDeviceFound;
     }
 
     public void startBT(){
@@ -409,28 +420,24 @@ public class BTHelper {
         DeviceCandidate candidate = new DeviceCandidate(device, rssi, uuids);
         LOG.debug("candidate: " + candidate.getName() + ", " + candidate.getDeviceType() + ", " + candidate.getMacAddress());
 
-        if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
-            LOG.info("device already bonded: " + device.getName() + ", " + device.getAddress());
-            return; // ignore already bonded devices
-        }
+
 
         if(!DeviceCandidate.DEVICE_TYPE_UNKNOWN.equals(candidate.getDeviceType())) {
+
+            if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+                LOG.info("device already bonded: " + device.getName() + ", " + device.getAddress());
+                if(!forceBond) {
+                    return; // ignore already bonded devices
+                } else {
+                    LOG.warn("Forcing bond to: " + device.getName() + ", " + device.getAddress());
+                }
+            }
+
             LOG.info("device good to be used: " + device.getName() + ", " + device.getAddress());
+
+            stopDiscovery();
+            this.onDeviceFound.call(candidate);
         }
 
-
-
-//        DeviceType deviceType = DeviceHelper.getInstance().getSupportedType(candidate);
-//        if (deviceType.isSupported()) {
-//            candidate.setDeviceType(deviceType);
-//            LOG.info("Recognized supported device: " + candidate);
-//            int index = deviceCandidates.indexOf(candidate);
-//            if (index >= 0) {
-//                deviceCandidates.set(index, candidate); // replace
-//            } else {
-//                deviceCandidates.add(candidate);
-//            }
-//            cadidateListAdapter.notifyDataSetChanged();
-//        }
     }
 }
