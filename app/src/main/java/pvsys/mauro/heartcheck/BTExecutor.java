@@ -45,6 +45,7 @@ public class BTExecutor {
         tasks.add(task);
     }
 
+    //TODO: improve task completed mechanism: is it really necessary to stop?
     public void taskCompleted() {
         taskCounter ++;
         free.set(true);

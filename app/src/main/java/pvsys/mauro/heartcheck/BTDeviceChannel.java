@@ -41,17 +41,11 @@ public class BTDeviceChannel {
 
     public void readCharacteristic(String uuid) {
         BluetoothGattCharacteristic characteristics = this.characteristicsMap.get(uuid);
-//        int properties = characteristics.getProperties();
-//        if ((properties & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
-//            LOG.warn("no properties in characteristic reading");
-//            //return;
-//        }
         if(!gatt.readCharacteristic(characteristics)){
             LOG.error("could not read " + characteristics.getUuid());
             //throw new RuntimeException("reading error for characteristic " + characteristics.getUuid());
         }
     }
-
 
     public void writeCharacteristic(UUID uuid, byte[] value) {
         writeCharacteristic(uuid.toString().toLowerCase(), value);
@@ -63,7 +57,6 @@ public class BTDeviceChannel {
             throw new RuntimeException("writing (setting) error for characteristic " + uuid);
         }
         if(!gatt.writeCharacteristic(characteristics)){
-
             LOG.error("could not write " + characteristics.getUuid());
             //throw new RuntimeException("writing error for characteristic " + uuid);
         }

@@ -1,6 +1,6 @@
 package pvsys.mauro.heartcheck;
 
-import android.annotation.TargetApi;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -8,7 +8,6 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
-import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.le.ScanCallback;
@@ -22,21 +21,13 @@ import android.os.Build;
 import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Queue;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
+
 
 import static android.bluetooth.le.ScanSettings.MATCH_MODE_STICKY;
 import static android.bluetooth.le.ScanSettings.SCAN_MODE_LOW_LATENCY;
@@ -44,9 +35,6 @@ import static android.bluetooth.le.ScanSettings.SCAN_MODE_LOW_LATENCY;
 public class MainActivity extends AppCompatActivity {
 
     private final static Logger LOG = new Logger(AppCompatActivity.class.getSimpleName());
-
-
-
 
 
     public static final int REQUEST_ENABLE_BT = 9;
@@ -295,9 +283,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         LOG.info(8 + ") control activation");
-//        btExecutor.writeCharacteristic(MiBandService.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, MiBandService.stopHeartMeasurementManual);
-//        btExecutor.writeCharacteristic(MiBandService.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, MiBandService.stopHeartMeasurementContinuous);
-//        btExecutor.writeCharacteristic(MiBandService.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, MiBandService.stopHeartMeasurementSleep);
+        //It seems it is necessary to set this initially to startHeartMeasurementSleep, although it won't work if not changed later
         btExecutor.writeCharacteristic(MiBandService.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, MiBandService.startHeartMeasurementSleep);
 
 
@@ -328,9 +314,6 @@ public class MainActivity extends AppCompatActivity {
         LOG.info(20 + ") ");
         btExecutor.readCharacteristic(MiBandService.UUID_CHARACTERISTIC_DATE_TIME);
         btExecutor.writeCharacteristic(MiBandService.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, MiBandService.stopHeartMeasurementSleep);
-        btExecutor.writeCharacteristic(MiBandService.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, MiBandService.startHeartMeasurementManual);
-        btExecutor.readCharacteristic(MiBandService.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT);
-        btExecutor.writeCharacteristic(MiBandService.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, MiBandService.stopHeartMeasurementManual);
         btExecutor.writeCharacteristic(MiBandService.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, MiBandService.startHeartMeasurementContinuous);
     }
 
@@ -354,7 +337,6 @@ public class MainActivity extends AppCompatActivity {
                 (byte) 0x0f
         };
         btExecutor.writeCharacteristic(MiBandService.UUID_CHARACTERISTIC_DATE_TIME, time);
-
 
     }
 
