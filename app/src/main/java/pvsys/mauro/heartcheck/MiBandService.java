@@ -15,7 +15,9 @@ public class MiBandService {
 
     public static final UUID UUID_SERVICE_MIBAND_SERVICE = UUID.fromString(String.format(BTLE_BASE_UUID, "FEE0"));
     public static final UUID UUID_SERVICE_MIBAND2_SERVICE = UUID.fromString(String.format(BTLE_BASE_UUID, "FEE1"));
-    public static final UUID UUID_SERVICE_HEART_RATE = GattService.UUID_SERVICE_HEART_RATE;
+
+    public static final UUID UUID_SERVICE_HEART_RATE = UUID.fromString((String.format(BTLE_BASE_UUID, "180D")));
+
     public static final String UUID_SERVICE_WEIGHT_SERVICE = "00001530-0000-3512-2118-0009af100700";
 
     public static final UUID UUID_CHARACTERISTIC_DEVICE_INFO = UUID.fromString(String.format(BTLE_BASE_UUID, "FF01"));

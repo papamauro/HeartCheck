@@ -18,9 +18,6 @@ public class BTDeviceChannel {
     public static final UUID UUID_DESCRIPTOR_GATT_CLIENT_CHARACTERISTIC_CONFIGURATION = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
 
-    public static final int MAX_ATTEMPTS = 1000;
-    public static final int SLEEP_TIME = 5;
-
     private final BluetoothGatt gatt;
     private final Map<String, BluetoothGattCharacteristic> characteristicsMap = new HashMap<String, BluetoothGattCharacteristic>();
 
@@ -38,31 +35,20 @@ public class BTDeviceChannel {
     }
 
 
-
     public void readCharacteristic(UUID uuid) {
         readCharacteristic(uuid.toString().toLowerCase());
     }
 
     public void readCharacteristic(String uuid) {
         BluetoothGattCharacteristic characteristics = this.characteristicsMap.get(uuid);
-        int properties = characteristics.getProperties();
-        if ((properties & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
-            LOG.warn("no properties in characteristic reading");
-            //return;
-        }
-        boolean written = false;
-        for (int i=0; i<MAX_ATTEMPTS && !written; i++) {
-            if(gatt.readCharacteristic(characteristics)){
-                written = true;
-            } else {
-                Thread.yield();
-                try {Thread.sleep(SLEEP_TIME);} catch (InterruptedException e) {e.printStackTrace();}
-            }
-        }
-        if (!written) {
-            throw new RuntimeException("reading error for characteristic " + characteristics.getUuid());
-        } else {
-            LOG.info("ACK - characteristics read started " + characteristics.getUuid());
+//        int properties = characteristics.getProperties();
+//        if ((properties & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
+//            LOG.warn("no properties in characteristic reading");
+//            //return;
+//        }
+        if(!gatt.readCharacteristic(characteristics)){
+            LOG.error("could not read " + characteristics.getUuid());
+            //throw new RuntimeException("reading error for characteristic " + characteristics.getUuid());
         }
     }
 
@@ -76,19 +62,10 @@ public class BTDeviceChannel {
         if(!characteristics.setValue(value)){
             throw new RuntimeException("writing (setting) error for characteristic " + uuid);
         }
-        boolean written = false;
-        for (int i=0; i<MAX_ATTEMPTS && !written; i++) {
-            if(gatt.writeCharacteristic(characteristics)){
-                written = true;
-            } else {
-                Thread.yield();
-                try {Thread.sleep(SLEEP_TIME);} catch (InterruptedException e) {e.printStackTrace();}
-            }
-        }
-        if (!written) {
-            throw new RuntimeException("writing error for characteristic " + uuid);
-        } else {
-            LOG.info("ACK - characteristics written " + uuid + ": " + Arrays.toString(value));
+        if(!gatt.writeCharacteristic(characteristics)){
+
+            LOG.error("could not write " + characteristics.getUuid());
+            //throw new RuntimeException("writing error for characteristic " + uuid);
         }
     }
 
@@ -98,19 +75,9 @@ public class BTDeviceChannel {
 
     public void registerToCharacteristic(String uuid, boolean enableFlag) {
         BluetoothGattCharacteristic characteristics = this.characteristicsMap.get(uuid);
-        boolean written = false;
-        for (int i=0; i<MAX_ATTEMPTS && !written; i++) {
-            if(registerToCharacteristicOnce(characteristics, enableFlag)){
-                written = true;
-            } else {
-                Thread.yield();
-                try {Thread.sleep(SLEEP_TIME);} catch (InterruptedException e) {e.printStackTrace();}
-            }
-        }
-        if (!written) {
-            throw new RuntimeException("registering error for characteristic " + uuid);
-        } else {
-            LOG.info("ACK - characteristics registered " + uuid);
+        if(!registerToCharacteristicOnce(characteristics, enableFlag)){
+            LOG.error("could not register " + characteristics.getUuid());
+            //throw new RuntimeException("registering error for characteristic " + uuid);
         }
     }
 

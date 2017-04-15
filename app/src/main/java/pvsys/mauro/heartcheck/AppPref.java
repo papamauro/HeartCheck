@@ -11,8 +11,6 @@ public class AppPref {
     private final static Logger LOG = new Logger(AppPref.class.getSimpleName());
 
     public static final String BONDED_DEVICE_ADDRESS = "BONDED_DEVICE_ADDRESS";
-    public static final String BONDED_DEVICE_NAME = "BONDED_DEVICE_NAME";
-    public static final String BONDED_DEVICE_TYPE = "BONDED_DEVICE_TYPE";
 
     private final SharedPreferences pref;
     private final Context context;
@@ -26,22 +24,12 @@ public class AppPref {
         pref = PreferenceManager.getDefaultSharedPreferences(this.context);
     }
 
-    public void setPreferredDevice(Device device) {
-        pref.edit().putString(BONDED_DEVICE_ADDRESS, device.getAddress()).apply();
-        pref.edit().putString(BONDED_DEVICE_NAME, device.getName()).apply();
-        pref.edit().putString(BONDED_DEVICE_TYPE, device.getType()).apply();
+    public void setPreferredDevice(String address) {
+        pref.edit().putString(BONDED_DEVICE_ADDRESS, address).apply();
 
-        LOG.debug("set preferred device to: " + device.getAddress() + " - " + device.getName() + " - " + device.getType() + " - " );
     }
 
-    public Device getPreferredDevice() {
-        Device device = null;
-        String address = pref.getString(BONDED_DEVICE_ADDRESS, null);
-        String name = pref.getString(BONDED_DEVICE_NAME, null);
-        String type = pref.getString(BONDED_DEVICE_TYPE, null);
-        if(address!=null && name!=null && type!=null) {
-            device = new Device(address, name, type);
-        }
-        return device;
+    public String getPreferredDevice() {
+        return pref.getString(BONDED_DEVICE_ADDRESS, null);
     }
 }
