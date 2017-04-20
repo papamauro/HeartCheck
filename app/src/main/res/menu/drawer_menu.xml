@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item android:title="@string/misc">
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+
+        <menu>
+            <item android:id="@+id/item_replace"
+                android:title="@string/mi_band_replace"
+                android:icon="@mipmap/ic_watch_black_24dp"/>
+        </menu>
+
+    </group>
+
+</item>
+
+
+</menu>
+
