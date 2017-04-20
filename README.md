@@ -8,3 +8,4 @@ Developer team:
 Application overview resources
 - First deadline overview: https://www.slideshare.net/MauroPapa1/heartcheck-firstdeadline
 - Second deadline overview: https://www.slideshare.net/MauroPapa1/heart-check-seconddeadline
+- Third deadline overviee: https://www.slideshare.net/MauroPapa1/heartcheckthirddeadline
