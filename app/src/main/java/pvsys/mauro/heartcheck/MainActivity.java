@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     BluetoothManager btManager;
     BluetoothAdapter btAdapter;
     Button button;
+    private MonitorDevice device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private MonitorDevice device;
-    private volatile boolean initialized = false;
 
     private void bluetoothSetupDone(){
 
@@ -85,37 +84,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         final BTDeviceBounder deviceBounder = new BTDeviceBounder(btAdapter);
-
-
-        BTDeviceDiscovery discovery = new BTDeviceDiscovery(btAdapter, new BTDeviceDiscovery.DeviceDiscoveryListener() {
-            @Override
-            public void onDeviceDiscovered(BluetoothDevice btDevice, String type, BTDeviceDiscovery btDeviceDiscovery) {
-                btDeviceDiscovery.stopScan();
-                deviceBounder.boundDevice(btDevice, type);
-                //start progress
-                device = deviceBounder.getBoundedDevice();
-                //stop progress
-                button.setVisibility(View.VISIBLE);
-            }
-        });
-        discovery.start();
-    }
-
-/*
-        MonitorDevice monitorDevice = deviceBounder.getBoundedDevice();
-        if(monitorDevice == null) {
+        device = deviceBounder.getBoundedDevice();
+        if(device == null) {
             BTDeviceDiscovery discovery = new BTDeviceDiscovery(btAdapter, new BTDeviceDiscovery.DeviceDiscoveryListener() {
                 @Override
-                public void onDeviceDiscovered(BluetoothDevice device, String type) {
-                    deviceBounder.boundDevice(device, type);
-                    handleDeviceFound(deviceBounder.getBoundedDevice());
+                public void onDeviceDiscovered(BluetoothDevice btDevice, String type, BTDeviceDiscovery btDeviceDiscovery) {
+                    btDeviceDiscovery.stopScan();
+                    deviceBounder.boundDevice(btDevice, type);
+                    //start progress
+                    device = deviceBounder.getBoundedDevice();
+                    //stop progress
+                    button.setVisibility(View.VISIBLE);
                 }
             });
             discovery.start();
-        } else {
-            handleDeviceFound(monitorDevice);
         }
-        */
+    }
 
 
 }
