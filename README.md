@@ -22,10 +22,10 @@ Realm:
 # Screenshots
 <div id="screenshots">
 
-<a href="https://ibb.co/dV2NQF"><img src="https://preview.ibb.co/drSYXv/Screenshot_20170705_145354.png" alt="Screenshot_20170705_145354" border="0"></a>
-<a href="https://ibb.co/fHHYXv"><img src="https://preview.ibb.co/gK1GkF/Screenshot_20170705_171336.png" alt="Screenshot_20170705_171336" border="0"></a>
-<a href="https://ibb.co/bDhdza"><img src="https://preview.ibb.co/jfDU5F/Screenshot_20170705_171600.png" alt="Screenshot_20170705_171600" border="0"></a>
-<a href="https://ibb.co/dQdJza"><img src="https://preview.ibb.co/ef4DXv/Screenshot_20170705_171743_copia.png" alt="Screenshot_20170705_171743_copia" border="0"></a><br /><a target='_blank' href='https://it.imgbb.com/'>upload images</a><br />
+<img style="width:23%" src="https://preview.ibb.co/drSYXv/Screenshot_20170705_145354.png" alt="Screenshot_20170705_145354" border="0">
+<img style="width:23%" src="https://preview.ibb.co/gK1GkF/Screenshot_20170705_171336.png" alt="Screenshot_20170705_171336" border="0">
+<img style="width:23%" src="https://preview.ibb.co/jfDU5F/Screenshot_20170705_171600.png" alt="Screenshot_20170705_171600" border="0">
+<img style="width:23%" src="https://preview.ibb.co/ef4DXv/Screenshot_20170705_171743_copia.png" alt="Screenshot_20170705_171743_copia" border="0">
 
 </div>
 
