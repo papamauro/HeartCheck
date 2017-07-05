@@ -13,7 +13,7 @@ Extremely simple yet efficient interface is provided to give a comfortable user 
 - Minimum API 21
 - Target API 22
 - Compiled with API 25</td>
-<td<img src="http://www.sasken.com/sites/default/files/android-logo_0.jpg" width="360" height="263"/>></td>
+<td><img src="http://www.sasken.com/sites/default/files/android-logo_0.jpg" width="360" height="263"/></td>
 <td>Realm:
 - Database built for mobile
 - Reactive architecture</td>
@@ -23,12 +23,12 @@ Extremely simple yet efficient interface is provided to give a comfortable user 
 
 
 # Screenshots
-<div id="screenshots">
+<div style="width:100vw">
 
-<img style="width:23%; height: auto;" src="https://preview.ibb.co/drSYXv/Screenshot_20170705_145354.png" alt="Screenshot_20170705_145354" border="0">
-<img style="width:23%; height: auto;" src="https://preview.ibb.co/gK1GkF/Screenshot_20170705_171336.png" alt="Screenshot_20170705_171336" border="0">
-<img style="width:23%; height: auto;" src="https://preview.ibb.co/jfDU5F/Screenshot_20170705_171600.png" alt="Screenshot_20170705_171600" border="0">
-<img style="width:23%; height: auto;" src="https://preview.ibb.co/ef4DXv/Screenshot_20170705_171743_copia.png" alt="Screenshot_20170705_171743_copia" border="0">
+<img style="width:23vw; height: auto;" src="https://preview.ibb.co/drSYXv/Screenshot_20170705_145354.png" alt="Screenshot_20170705_145354" border="0">
+<img style="width:23vw; height: auto;" src="https://preview.ibb.co/gK1GkF/Screenshot_20170705_171336.png" alt="Screenshot_20170705_171336" border="0">
+<img style="width:23vw; height: auto;" src="https://preview.ibb.co/jfDU5F/Screenshot_20170705_171600.png" alt="Screenshot_20170705_171600" border="0">
+<img style="width:23vw; height: auto;" src="https://preview.ibb.co/ef4DXv/Screenshot_20170705_171743_copia.png" alt="Screenshot_20170705_171743_copia" border="0">
 
 </div>
 
