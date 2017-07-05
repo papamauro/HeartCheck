@@ -15,7 +15,7 @@ Extremely simple yet efficient interface is provided to give a comfortable user 
 <li>Target API 22</li>
 <li>Compiled with API 25</li>
 </ul></td>
-<td><img src="https://4.bp.blogspot.com/-brgnjo5GUa0/WLhXuAwnQII/AAAAAAAAD88/oxL3WK0wiU8zRVDAKyt1sUo37VZLo3BrQCLcB/s1600/Android%2BLogo.png" width="250"/></td>
+<td><img src="https://4.bp.blogspot.com/-brgnjo5GUa0/WLhXuAwnQII/AAAAAAAAD88/oxL3WK0wiU8zRVDAKyt1sUo37VZLo3BrQCLcB/s1600/Android%2BLogo.png" width="200"/></td>
 <td>
 <h5>Realm</h5>
 <ul>
