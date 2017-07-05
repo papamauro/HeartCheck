@@ -9,15 +9,20 @@ Extremely simple yet efficient interface is provided to give a comfortable user 
 # Technologies
 <table>
 <tr>
-<td>Android:
-- Minimum API 21
-- Target API 22
-- Compiled with API 25</td>
-<td><img src="http://www.sasken.com/sites/default/files/android-logo_0.jpg" width="360" height="263"/></td>
-<td>Realm:
-- Database built for mobile
-- Reactive architecture</td>
-<td><img src="https://pbs.twimg.com/profile_images/738192303634845699/XzDXMlHD.jpg" width="360" heigth="263"/></td>
+<td><h5>Android</h5>
+<ul>
+<li>Minimum API 21</li>
+<li>Target API 22</li>
+<li>Compiled with API 25</li>
+</ul></td>
+<td><img width="20%" src="http://www.sasken.com/sites/default/files/android-logo_0.jpg" width="360" height="263"/></td>
+<td>
+<h5>Realm</h5>
+<ul>
+<li>Database built for mobile</li>
+<li>Reactive architecture</li>
+</ul>
+<td><img width="20%" src="https://pbs.twimg.com/profile_images/738192303634845699/XzDXMlHD.jpg" width="360" heigth="263"/></td>
 </tr>
 </table>
 
