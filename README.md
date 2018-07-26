@@ -1,3 +1,5 @@
+ALERT: This project is no more mantained and updated!
+
 # HeartCheck
 HeartCheck is an third-part android application for Xiaomi Mi Band Pulse. Its goal is to provide a tool to prevent heart diseases by checking HR live variations.
 
